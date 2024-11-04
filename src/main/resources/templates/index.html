@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperAndes</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <div class="container mx-auto w-25">
+        <h1>SuperAndes</h1>
+        <img th:src="@{/images/logo.png}" width="250"/>
+        <div>
+            <a th:href="@{/ciudades}" class="btn btn-primary">Ciudades</a>
+            <a th:href="@{/proveedores}" class="btn btn-primary">Proveedores</a>
+            <a th:href="@{/categorias}" class="btn btn-primary">Categorías</a>
+            <a th:href="@{/sucursales}" class="btn btn-primary">Sucursales</a>
+        </div>
+    </div>
+</body>
+</html>

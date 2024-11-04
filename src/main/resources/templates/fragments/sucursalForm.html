@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragmento</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <div th:fragment="sucursalForm(titulo, sucursal, ciudades)" class="container border border-2 w-50">
+        <h1 class="text-center" th:text="${titulo}"></h1>
+        <form>
+            <label class="col-form-label">Nombre</label>
+            <input class="form-control" type="text" id="nombre" name="nombre" required th:value="${sucursal.nombre}"/><br>
+
+            <label class="col-form-label">Tamaño</label>
+            <input class="form-control" type="number" id="tamaño" name="tamaño" required th:value="${sucursal.tamaño}"/><br>
+
+            <label class="col-form-label">Dirección</label>
+            <input class="form-control" type="text" id="direccion" name="direccion" required th:value="${sucursal.direccion}"/><br>
+
+            <label class="col-form-label">Teléfono</label>
+            <input class="form-control" type="tel" id="telefono" name="telefono" required th:value="${sucursal.telefono}"/><br>
+
+            <label class="col-form-label">Ciudad</label>
+            <select class="form-control" id="idCiudad" name="idCiudad" required>
+                <option th:each="ciudad : ${ciudades}" 
+                        th:value="${ciudad.id}" 
+                        th:text="${ciudad.nombre}" 
+                        th:selected="${ciudad.id == sucursal.idCiudad}"> 
+                </option>
+            </select><br>
+
+            <div class="text-center">
+                <input type="submit" value="Guardar" class="btn btn-primary"/>
+                <a th:href="@{/sucursales}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
