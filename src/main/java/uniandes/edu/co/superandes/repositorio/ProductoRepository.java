@@ -69,17 +69,15 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
         @Query(value = "DELETE FROM productos WHERE id = :id", nativeQuery = true)
         void eliminarProducto(@Param("id") int id);
 
-
         /* 
-        @Query("SELECT DISTINCT B.* "+//
-                "FROM PRODUCTOS B "+//
-                "INNER JOIN ")
+        @Query(value = "SELECT DISTINCT P.* " + //
+                        "FROM productos P " + //
+                        "INNER JOIN ")
         Collection<Producto> darProductoPorCaracteristica(
                         @Param("precioMayor") Integer precioMayor,
                         @Param("precioMenor") Integer precioMenor,
                         @Param("fechaVencimiento") Date fechaVencimiento,
-                        @Param("sucursalId") Long sucursalId,
-                        @Param("categoriaId") Long categoriaId);
-
-                        */
+                        @Param("sucursalId") Integer sucursalId,
+                        @Param("categoriaId") Integer categoriaId);
+        */
 }
