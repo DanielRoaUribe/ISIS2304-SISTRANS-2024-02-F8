@@ -1,5 +1,7 @@
 package uniandes.edu.co.superandes.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.superandes.modelo.Sucursal;
 import uniandes.edu.co.superandes.repositorio.CiudadRepository;
+import uniandes.edu.co.superandes.repositorio.ProductoRepository.RespuestaProductosRequiereOrdenCompra;
 import uniandes.edu.co.superandes.repositorio.SucursalRepository;
+import uniandes.edu.co.superandes.repositorio.SucursalRepository.RespuestaPorcentajes;
 
 @Controller
 public class SucursalController {
@@ -79,6 +84,8 @@ public class SucursalController {
     // Endpoint para obtener una sucursal por ID
     @GetMapping("/api/sucursales/{id}")
     public ResponseEntity<Sucursal> obtenerSucursal(@PathVariable("id") int id) {
+
+
         Sucursal sucursal = sucursalRepository.darSucursal(id);
         if (sucursal != null) {
             return ResponseEntity.ok(sucursal);
@@ -87,4 +94,11 @@ public class SucursalController {
         }
     }
 
+    // Requerimiento funcional 1
+    @GetMapping("sucursales/porcentajeOcupacion")
+    public Collection<RespuestaPorcentajes> darProductosRequierenOrdenCompra(
+        @RequestParam String nombre,
+        @RequestParam Integer id_sucursal) {
+    return sucursalRepository.porcentajeOcupacion(nombre, id_sucursal);
+}
 }

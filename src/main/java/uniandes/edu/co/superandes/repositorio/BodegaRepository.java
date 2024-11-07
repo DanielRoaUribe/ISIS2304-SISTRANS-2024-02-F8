@@ -12,6 +12,8 @@ import uniandes.edu.co.superandes.modelo.Bodega;
 
 public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
 
+
+
     @Query(value = "SELECT * FROM bodegas", nativeQuery = true)
     Collection<Bodega> darBodegas();
 
@@ -39,4 +41,6 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
     @Transactional
     @Query(value = "DELETE FROM bodegas WHERE id = :id", nativeQuery = true)
     void eliminarBodega(@Param("id") int id);
+
+
 }

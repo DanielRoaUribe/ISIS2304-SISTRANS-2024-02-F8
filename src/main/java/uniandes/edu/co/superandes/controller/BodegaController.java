@@ -1,5 +1,7 @@
 package uniandes.edu.co.superandes.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import uniandes.edu.co.superandes.modelo.Bodega;
 import uniandes.edu.co.superandes.repositorio.BodegaRepository;
+import uniandes.edu.co.superandes.repositorio.BodegaRepository.RespuestaPorcentajes;
 
 @Controller
 public class BodegaController {
@@ -55,13 +58,13 @@ public class BodegaController {
     }
 
     // Endpoint para eliminar una bodega por ID
-@DeleteMapping("/api/bodegas/{id}")
-public ResponseEntity<String> eliminarBodega(@PathVariable("id") int id) {
-    try {
-        bodegaRepository.eliminarBodega(id);
-        return ResponseEntity.ok("Bodega eliminada con éxito");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
+    @DeleteMapping("/api/bodegas/{id}")
+    public ResponseEntity<String> eliminarBodega(@PathVariable("id") int id) {
+        try {
+            bodegaRepository.eliminarBodega(id);
+            return ResponseEntity.ok("Bodega eliminada con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la bodega");
+        }
     }
-}
 }

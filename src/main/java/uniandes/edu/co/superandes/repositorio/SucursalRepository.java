@@ -43,4 +43,19 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
     @Transactional
     @Query(value = "DELETE FROM sucursales WHERE id = :id", nativeQuery = true)
     void eliminarSucursal(@Param("id") int id);
+
+    public interface RespuestaPorcentajes{
+        String getNOMBRE();
+
+        Integer getPORCENTAJE();
+    }
+
+
+    @Query(value = "SELECT b.nombre AS nombre, (CAST(COUNT(p.id) AS DECIMAL) / b.tamaño) * 100 AS porcentaje " +
+                "FROM bodegas b " +
+                "JOIN productos p ON p.id_bodega = b.id " +
+                "JOIN sucursales s ON s.id = b.id_sucursal " + 
+                "WHERE p.nombre = :producto AND s.id = :idSucursal " +
+                "GROUP BY b.id")
+    Collection<RespuestaPorcentajes> porcentajeOcupacion(@Param("producto") String producto, @Param("idSucursal") Integer idSucursal);
 }
