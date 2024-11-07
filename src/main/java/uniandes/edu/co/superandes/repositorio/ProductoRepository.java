@@ -13,6 +13,14 @@ import uniandes.edu.co.superandes.modelo.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
+        public interface RespuestaInformacionProductosEnBodega{
+                String getNOMBRE();
+                int getCANTIDAD_ACTUAL();
+                int getCANTIDAD_MINIMA();
+                int getCOSTO_PROMEDIO();
+                
+        }
+
         @Query(value = "SELECT * FROM productos", nativeQuery = true)
         Collection<Producto> darProductos();
 
@@ -69,15 +77,34 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
         @Query(value = "DELETE FROM productos WHERE id = :id", nativeQuery = true)
         void eliminarProducto(@Param("id") int id);
 
-        /* 
-        @Query(value = "SELECT DISTINCT P.* " + //
-                        "FROM productos P " + //
-                        "INNER JOIN ")
+        // Requerimiento Funcional 2
+        @Query(value = "SELECT DISTINCT P.* " +
+                        "FROM productos P " +
+                        "INNER JOIN bodegas B ON P.id_Bodega = B.id " +
+                        "INNER JOIN sucursales S ON B.id_Sucursal = S.id " +
+                        "WHERE P.precio BETWEEN :precioMenor AND :precioMayor " +
+                        "AND P.fecha_expiracion < :fechaVencimiento " +
+                        "AND S.id = :sucursalId " +
+                        "AND P.id_Categoria = :categoriaId", nativeQuery = true)
         Collection<Producto> darProductoPorCaracteristica(
                         @Param("precioMayor") Integer precioMayor,
                         @Param("precioMenor") Integer precioMenor,
                         @Param("fechaVencimiento") Date fechaVencimiento,
                         @Param("sucursalId") Integer sucursalId,
                         @Param("categoriaId") Integer categoriaId);
-        */
+
+        // Requerimiento Funcional 3
+        @Query(value = "SELECT P.nombre, " +
+                        "       COUNT(P.id) AS CANTIDAD_ACTUAL, " +
+                        "       P.nivel_reorden AS CANTIDAD_MINIMA, " +
+                        "       AVG(P.precio) AS COSTO_PROMEDIO " +
+                        "FROM productos P " +
+                        "INNER JOIN bodegas B ON P.id_bodega = B.id " +
+                        "INNER JOIN sucursales S ON B.id_Sucursal = S.id " +
+                        "WHERE S.id = :sucursalId AND B.id = :bodegaId " +
+                        "GROUP BY P.nombre, P.nivel_reorden", nativeQuery = true)
+        Collection<RespuestaInformacionProductosEnBodega> darInventarioProductosEnBodega(
+                        @Param("sucursalId") Integer sucursalId,
+                        @Param("bodegaId") Integer bodegaId);
+
 }

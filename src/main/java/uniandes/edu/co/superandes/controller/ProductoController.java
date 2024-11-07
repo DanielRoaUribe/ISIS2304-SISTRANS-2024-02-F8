@@ -1,17 +1,32 @@
 package uniandes.edu.co.superandes.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import uniandes.edu.co.superandes.modelo.Producto;
 import uniandes.edu.co.superandes.repositorio.ProductoRepository;
+import uniandes.edu.co.superandes.repositorio.ProductoRepository.RespuestaInformacionProductosEnBodega;
+
 
 @RestController
 public class ProductoController {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @GetMapping("/productos")
+    public String productos(Model model) {
+        Collection<RespuestaInformacionProductosEnBodega> informacion = productoRepository.darInventarioProductosEnBodega(Integer sucursalId,Integer bodegaId);
+        model.addAttribute("productos", productoRepository.darProductos());
+        return "productos";
+    }
+    
+
+
 
     // Endpoint para crear un nuevo producto
     @PostMapping("/api/productos")
