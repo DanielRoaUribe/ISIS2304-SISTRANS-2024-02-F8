@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import uniandes.edu.co.superandes.modelo.Bodega;
 import uniandes.edu.co.superandes.repositorio.BodegaRepository;
-import uniandes.edu.co.superandes.repositorio.BodegaRepository.RespuestaPorcentajes;
 
 @Controller
 public class BodegaController {
