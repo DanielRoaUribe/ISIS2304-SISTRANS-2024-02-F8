@@ -93,12 +93,15 @@ public class SucursalController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    /* 
     // Requerimiento funcional 1
     @GetMapping("sucursales/porcentajeOcupacion")
     public Collection<RespuestaPorcentajes> darProductosRequierenOrdenCompra(
         @RequestParam String nombre,
         @RequestParam Integer id_sucursal) {
     return sucursalRepository.porcentajeOcupacion(nombre, id_sucursal);
+
+    
 }
+    */
 }

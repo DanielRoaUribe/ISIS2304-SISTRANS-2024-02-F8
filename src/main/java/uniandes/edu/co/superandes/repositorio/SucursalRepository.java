@@ -50,7 +50,7 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
         Integer getPORCENTAJE();
     }
 
-
+    /* 
     @Query(value = "SELECT b.nombre AS nombre, (CAST(COUNT(p.id) AS DECIMAL) / b.tamaño) * 100 AS porcentaje " +
                 "FROM bodegas b " +
                 "JOIN productos p ON p.id_bodega = b.id " +
@@ -58,4 +58,6 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
                 "WHERE p.nombre = :producto AND s.id = :idSucursal " +
                 "GROUP BY b.id")
     Collection<RespuestaPorcentajes> porcentajeOcupacion(@Param("producto") String producto, @Param("idSucursal") Integer idSucursal);
+
+    */
 }
