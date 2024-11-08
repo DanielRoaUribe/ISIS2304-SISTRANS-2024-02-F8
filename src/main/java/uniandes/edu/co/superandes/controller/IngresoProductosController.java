@@ -28,7 +28,7 @@ public class IngresoProductosController {
 
 
     // Endpoint para RFC6 - Nivel de aislamiento SERIALIZABLE
-    @GetMapping("/serializable/{idSucursal}/{idBodega}")
+    @GetMapping("api/ingresoProductos/serializable/{idSucursal}/{idBodega}")
     public ResponseEntity<?> consultarIngresosSerializable(@PathVariable Integer idSucursal, @PathVariable Integer idBodega) {
         try {
             Collection<DocumentoIngresoDTO> ingresos = ingresoProductosServicio.consultarIngresosSerializable(idSucursal, idBodega);
@@ -39,7 +39,7 @@ public class IngresoProductosController {
     }
 
     // Endpoint para RFC7 - Nivel de aislamiento READ_COMMITTED
-    @GetMapping("/read-committed/{idSucursal}/{idBodega}")
+    @GetMapping("api/ingresoProductos/read-committed/{idSucursal}/{idBodega}")
     public ResponseEntity<?> consultarIngresosReadCommitted(@PathVariable Integer idSucursal, @PathVariable Integer idBodega) {
         try {
             Collection<DocumentoIngresoDTO> ingresos = ingresoProductosServicio.consultarIngresosReadCommitted(idSucursal, idBodega);

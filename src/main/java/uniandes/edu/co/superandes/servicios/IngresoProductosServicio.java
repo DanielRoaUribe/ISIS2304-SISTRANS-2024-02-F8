@@ -24,7 +24,7 @@ public class IngresoProductosServicio {
 
     @Autowired
     private IngresoProductosRepository ingresoProductosRepository;
-
+    //RF10
     @Transactional
     public void crearIngresoProductos(int idOrdenCompra, Integer idBodega) {
 
