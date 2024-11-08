@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import uniandes.edu.co.superandes.modelo.IngresoProductos;
 import uniandes.edu.co.superandes.modelo.OrdenCompra;
 import uniandes.edu.co.superandes.modelo.Proveedor;
 import uniandes.edu.co.superandes.modelo.Sucursal;
@@ -47,11 +48,11 @@ public class IngresoProductosServicio {
 
         // RFC6 - Nivel de aislamiento SERIALIZABLE y rollback en caso de error
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Collection<DocumentoIngresoDTO> consultarIngresosSerializable(Integer idSucursal, Integer idBodega) {
+    public Collection<IngresoProductos> consultarIngresosSerializable(Integer idSucursal, Integer idBodega) {
         try {
             Thread.sleep(30000);  // Temporizador de 30 segundos
-            Collection<Object[]> resultados = ingresoProductosRepository.obtenerDocumentosIngreso(idSucursal, idBodega);
-            return mapToDTO(resultados);
+            Collection<IngresoProductos> resultados = ingresoProductosRepository.darIngresosProductos();
+            return resultados;
         } catch (Exception e) {
             throw new RuntimeException("Error al realizar la consulta serializable: " + e.getMessage());
         }
@@ -59,11 +60,11 @@ public class IngresoProductosServicio {
 
     // RFC7 - Nivel de aislamiento READ_COMMITTED y rollback en caso de error
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public Collection<DocumentoIngresoDTO> consultarIngresosReadCommitted(Integer idSucursal, Integer idBodega) {
+    public Collection<IngresoProductos> consultarIngresosReadCommitted(Integer idSucursal, Integer idBodega) {
         try {
             Thread.sleep(30000);  // Temporizador de 30 segundos
-            Collection<Object[]> resultados = ingresoProductosRepository.obtenerDocumentosIngreso(idSucursal, idBodega);
-            return mapToDTO(resultados);
+            Collection<IngresoProductos> resultados = ingresoProductosRepository.darIngresosProductos();
+            return resultados;
         } catch (Exception e) {
             throw new RuntimeException("Error al realizar la consulta Read Committed: " + e.getMessage());
         }
