@@ -2,9 +2,12 @@ package uniandes.edu.co.superandes.servicios;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uniandes.edu.co.superandes.modelo.OrdenCompra;
@@ -40,6 +43,43 @@ public class IngresoProductosServicio {
         // Cambiar orden de compra a ENTREGADA
         OrdenCompra ordenCompra = ordenCompraRepository.darOrdenCompra(idOrdenCompra);
         ordenCompraRepository.actualizarOrdenCompra(idOrdenCompra, ordenCompra.getFechaCreacion(), ordenCompra.getFechaEntrega(), "Entregada", ordenCompra.getPrecio(), ordenCompra.getCantidad(), ordenCompra.getIdProveedor().getId(), ordenCompra.getIdSucursal().getId(), ordenCompra.getIdProducto().getId());
+    }
+
+        // RFC6 - Nivel de aislamiento SERIALIZABLE y rollback en caso de error
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public Collection<DocumentoIngresoDTO> consultarIngresosSerializable(Integer idSucursal, Integer idBodega) {
+        try {
+            Thread.sleep(30000);  // Temporizador de 30 segundos
+            Collection<Object[]> resultados = ingresoProductosRepository.obtenerDocumentosIngreso(idSucursal, idBodega);
+            return mapToDTO(resultados);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al realizar la consulta serializable: " + e.getMessage());
+        }
+    }
+
+    // RFC7 - Nivel de aislamiento READ_COMMITTED y rollback en caso de error
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public Collection<DocumentoIngresoDTO> consultarIngresosReadCommitted(Integer idSucursal, Integer idBodega) {
+        try {
+            Thread.sleep(30000);  // Temporizador de 30 segundos
+            Collection<Object[]> resultados = ingresoProductosRepository.obtenerDocumentosIngreso(idSucursal, idBodega);
+            return mapToDTO(resultados);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al realizar la consulta Read Committed: " + e.getMessage());
+        }
+    }
+
+    // Método para mapear los resultados a una lista de DTOs
+    private Collection<DocumentoIngresoDTO> mapToDTO(Collection<Object[]> resultados) {
+        return resultados.stream()
+            .map(obj -> new DocumentoIngresoDTO(
+                (Integer) obj[0], // numeroDocumento
+                (String) obj[1],  // fechaIngreso
+                (String) obj[2],  // nombreProveedor
+                (String) obj[3],  // nombreSucursal
+                (String) obj[4]   // nombreBodega
+            ))
+            .collect(Collectors.toList());
     }
 
 }

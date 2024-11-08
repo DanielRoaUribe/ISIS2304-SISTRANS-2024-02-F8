@@ -56,4 +56,17 @@ public interface IngresoProductosRepository extends JpaRepository<IngresoProduct
     @Transactional
     @Query(value = "DELETE FROM ingreso_productos WHERE id = :id", nativeQuery = true)
     void eliminarIngresoProducto(@Param("id") int id);
+
+    //Ingreso de productos en los ultimos 30 dias
+    @Query(value = "SELECT ip.id AS numeroDocumento, ip.fecha_ingreso AS fechaIngreso, " +
+                   "       p.nombre AS nombreProveedor, s.nombre AS nombreSucursal, b.nombre AS nombreBodega " +
+                   "FROM ingreso_productos ip " +
+                   "JOIN proveedores p ON ip.proveedor = p.id " +
+                   "JOIN sucursales s ON ip.sucursal = s.id " +
+                   "JOIN bodegas b ON ip.bodega = b.id " +
+                   "WHERE ip.sucursal = :idSucursal " +
+                   "  AND ip.bodega = :idBodega " +
+                   "  AND ip.fecha_ingreso >= CURRENT_DATE - INTERVAL '30' DAY", nativeQuery = true)
+    Collection<Object[]> obtenerDocumentosIngreso(@Param("idSucursal") Integer idSucursal, @Param("idBodega") Integer idBodega);
+
 }
