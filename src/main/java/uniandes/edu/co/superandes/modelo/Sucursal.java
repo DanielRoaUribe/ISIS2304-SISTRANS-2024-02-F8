@@ -1,34 +1,29 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.util.List;
 
-@Entity
-@Table(name = "sucursales")
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.ToString;
+
+@Document(collection = "sucursal")
+@ToString
 public class Sucursal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nombre;
     private Double tamaño;
     private String direccion;
     private String telefono;
-
-    @ManyToOne
-    @JoinColumn(name = "id_ciudad", nullable = false) // Clave foránea hacia Ciudad
-    private Ciudad idCiudad;
+    private String idCiudad;
 
     public Sucursal() {
         // Constructor vacío
     }
 
-    public Sucursal(String nombre, Double tamaño, String direccion, String telefono, Ciudad idCiudad) {
+    public Sucursal(String nombre, Double tamaño, String direccion, String telefono, String idCiudad) {
         this.nombre = nombre;
         this.tamaño = tamaño;
         this.direccion = direccion;
@@ -77,11 +72,11 @@ public class Sucursal {
         this.telefono = telefono;
     }
 
-    public Ciudad getIdCiudad() {
+    public String getIdCiudad() {
         return idCiudad;
     }
 
-    public void setIdCiudad(Ciudad idCiudad) {
+    public void setIdCiudad(String idCiudad) {
         this.idCiudad = idCiudad;
     }
 }

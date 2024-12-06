@@ -1,52 +1,34 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "ordenes_compra")
+@Document(collection = "ordenCompra")
 public class OrdenCompra {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
     private String fechaCreacion;
     private String fechaEntrega;
     private String estado;
-    private Integer precio;
-    private Integer cantidad;
+    private String idProveedor;
+    private String idSucursal;
+    private List<Producto> productos;  // Lista de productos
 
-    @ManyToOne
-    @JoinColumn(name = "id_proveedor", nullable = false) // Clave foránea hacia Proveedor
-    private Proveedor idProveedor;
+    // Constructor vacío
+    public OrdenCompra() {}
 
-    @ManyToOne
-    @JoinColumn(name = "id_sucursal", nullable = false) // Clave foránea hacia Sucursal
-    private Sucursal idSucursal;
-
-    @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false) // Clave foránea hacia Producto
-    private Producto idProducto; // Nueva relación
-
-    public OrdenCompra() {
-        // Constructor vacío
-    }
-
-    public OrdenCompra(String fechaCreacion, String fechaEntrega, String estado, Integer precio, Integer cantidad, Proveedor idProveedor, Sucursal idSucursal, Producto idProducto) {
+    // Constructor con parámetros
+    public OrdenCompra(Integer id, String fechaCreacion, String fechaEntrega, String estado,
+                       String idProveedor, String idSucursal, List<Producto> productos) {
+        this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.fechaEntrega = fechaEntrega;
         this.estado = estado;
-        this.precio = precio;
-        this.cantidad = cantidad;
         this.idProveedor = idProveedor;
         this.idSucursal = idSucursal;
-        this.idProducto = idProducto; // Inicializar la relación con Producto
+        this.productos = productos;
     }
 
     // Getters y Setters
@@ -82,43 +64,27 @@ public class OrdenCompra {
         this.estado = estado;
     }
 
-    public Integer getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Integer precio) {
-        this.precio = precio;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Proveedor getIdProveedor() {
+    public String getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(Proveedor idProveedor) {
+    public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
     }
 
-    public Sucursal getIdSucursal() {
+    public String getIdSucursal() {
         return idSucursal;
     }
 
-    public void setIdSucursal(Sucursal idSucursal) {
+    public void setIdSucursal(String idSucursal) {
         this.idSucursal = idSucursal;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public List<Producto> getProductos() {
+        return productos;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }

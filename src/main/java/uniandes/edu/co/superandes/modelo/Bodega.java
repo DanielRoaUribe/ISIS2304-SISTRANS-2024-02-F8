@@ -1,35 +1,32 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.*;
+import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "bodegas")
+import lombok.ToString;
+
+@Document(collection = "bodega")
+@ToString
 public class Bodega {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String nombre;
-    private Integer tamaño; // En algún tipo de medida (por ejemplo, metros cuadrados)
-    private Integer costoPromedio;
+    private Integer tamaño;
+    private String idSucursal;
+    private List<Producto> productos;
 
+    // Constructor vacío
+    public Bodega() {}
 
-
-    @ManyToOne
-    @JoinColumn(name = "id_sucursal", nullable = false) // Clave foránea hacia Sucursal
-    private Sucursal idSucursal;
-
-    public Bodega() {
-        // Constructor vacío
-    }
-
-    public Bodega(String nombre, Integer tamaño, Integer costoPromedio, Sucursal idSucursal) {
+    // Constructor con parámetros
+    public Bodega(String nombre, Integer tamaño, String idSucursal, List<Producto> productos) {
         this.nombre = nombre;
         this.tamaño = tamaño;
-        this.costoPromedio = costoPromedio;
         this.idSucursal = idSucursal;
+        this.productos = productos;
     }
 
     // Getters y Setters
@@ -57,20 +54,19 @@ public class Bodega {
         this.tamaño = tamaño;
     }
 
-    public Integer getCostoPromedio() {
-        return costoPromedio;
-    }
-
-    public void setCostoPromedio(Integer costoPromedio) {
-        this.costoPromedio = costoPromedio;
-    }
-
-
-    public Sucursal getIdSucursal() {
+    public String getIdSucursal() {
         return idSucursal;
     }
 
-    public void setIdSucursal(Sucursal idSucursal) {
+    public void setIdSucursal(String idSucursal) {
         this.idSucursal = idSucursal;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }

@@ -1,26 +1,26 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "proveedores")
+import lombok.ToString;
+
+@Document(collection = "proveedor")
+@ToString
 public class Proveedor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
     private String nit;
     private String nombre;
     private String direccion;
     private String personaContacto;
     private String telefonoContacto;
 
+    // Constructor vacío
+    public Proveedor() {}
 
+    // Constructor con parámetros
     public Proveedor(String nit, String nombre, String direccion, String personaContacto, String telefonoContacto) {
         this.nit = nit;
         this.nombre = nombre;
@@ -29,12 +29,7 @@ public class Proveedor {
         this.telefonoContacto = telefonoContacto;
     }
 
-
-    public Proveedor() {
-        ;
-    }
-
-
+    // Getters y Setters
     public Integer getId() {
         return id;
     }

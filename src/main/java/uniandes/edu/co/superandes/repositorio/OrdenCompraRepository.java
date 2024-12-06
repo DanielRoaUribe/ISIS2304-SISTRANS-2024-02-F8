@@ -1,53 +1,21 @@
 package uniandes.edu.co.superandes.repositorio;
 
-import java.util.Collection;
+import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import uniandes.edu.co.superandes.modelo.OrdenCompra;
+import uniandes.edu.co.superandes.modelo.Producto;
 
-public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Integer> {
+public interface OrdenCompraRepository extends MongoRepository<OrdenCompra, Integer> {
 
-    @Query(value = "SELECT * FROM ordenes_compra", nativeQuery = true)
-    Collection<OrdenCompra> darOrdenesCompra();
+    // Método para insertar una nueva OrdenCompra
+    @Query("{ $insert: { _id: ?0, fechaCreacion: ?1, fechaEntrega: ?2, estado: ?3, idProveedor: ?4, idSucursal: ?5, productos: ?6 } }")
+    void insertarOrdenCompra(Integer id, String fechaCreacion, String fechaEntrega, String estado,
+                             String idProveedor, String idSucursal, List<Producto> productos);
 
-    @Query(value = "SELECT * FROM ordenes_compra WHERE id = :id", nativeQuery = true)
-    OrdenCompra darOrdenCompra(@Param("id") int id);
+    // Método para eliminar una orden de compra por su ID
+    void deleteById(Integer id);
 
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO ordenes_compra (fecha_creacion, fecha_entrega, estado, precio, cantidad, id_proveedor, id_sucursal, id_producto) "
-            + "VALUES (:fechaCreacion, :fechaEntrega, :estado, :precio, :cantidad, :idProveedor, :idSucursal, :idProducto)", nativeQuery = true)
-    void insertarOrdenCompra(@Param("fechaCreacion") String fechaCreacion,
-                             @Param("fechaEntrega") String fechaEntrega,
-                             @Param("estado") String estado,
-                             @Param("precio") Integer precio,
-                             @Param("cantidad") Integer cantidad,
-                             @Param("idProveedor") int idProveedor,
-                             @Param("idSucursal") int idSucursal,
-                             @Param("idProducto") int idProducto);
-
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE ordenes_compra SET fecha_creacion = :fechaCreacion, fecha_entrega = :fechaEntrega, "
-            + "estado = :estado, precio = :precio, cantidad = :cantidad, id_proveedor = :idProveedor, "
-            + "id_sucursal = :idSucursal, id_producto = :idProducto WHERE id = :id", nativeQuery = true)
-    void actualizarOrdenCompra(@Param("id") int id,
-                               @Param("fechaCreacion") String fechaCreacion,
-                               @Param("fechaEntrega") String fechaEntrega,
-                               @Param("estado") String estado,
-                               @Param("precio") Integer precio,
-                               @Param("cantidad") Integer cantidad,
-                               @Param("idProveedor") int idProveedor,
-                               @Param("idSucursal") int idSucursal,
-                               @Param("idProducto") int idProducto);
-
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM ordenes_compra WHERE id = :id", nativeQuery = true)
-    void eliminarOrdenCompra(@Param("id") int id);
+    // El método save() de MongoRepository ya maneja las actualizaciones si el id ya existe
 }

@@ -1,3 +1,4 @@
+/*
 package uniandes.edu.co.superandes.repositorio;
 
 import java.util.Collection;
@@ -5,13 +6,13 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import uniandes.edu.co.superandes.modelo.Ciudad;
 
-public interface CiudadRepository extends JpaRepository<Ciudad, Integer>{
-
+public interface CiudadRepository extends MongoRepository<Ciudad, Integer>{
     @Query(value = "SELECT * FROM ciudades", nativeQuery=true)
     Collection<Ciudad> darCiudades();
 
@@ -33,3 +34,4 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Integer>{
     @Query(value = "DELETE FROM ciudades WHERE id=:id", nativeQuery = true)
     void eliminarCiudad(@Param("id") int id);
 }
+*/
