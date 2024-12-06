@@ -1,3 +1,4 @@
+/*
 package uniandes.edu.co.superandes.repositorio;
 
 import java.util.Collection;
@@ -67,3 +68,4 @@ public interface IngresoProductosRepository extends JpaRepository<IngresoProduct
 Collection<Object[]> obtenerDocumentosIngreso(@Param("idSucursal") Integer idSucursal, @Param("idBodega") Integer idBodega);
 
 }
+*/

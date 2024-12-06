@@ -1,19 +1,16 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "categorias")
+import lombok.ToString;
+
+@Document(collection = "categoria")
+@ToString
 public class Categoria {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String nombre;
     private String descripcion;
     private String caracteristicasAlmacenamiento;

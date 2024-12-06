@@ -1,3 +1,4 @@
+/* 
 package uniandes.edu.co.superandes.controller;
 
 import java.util.Collection;
@@ -44,3 +45,4 @@ public class IngresoProductosController {
     }
 
 }
+*/

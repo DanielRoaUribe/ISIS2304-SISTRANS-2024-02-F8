@@ -1,17 +1,17 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.List;
 
-@Entity
-@Table(name = "ciudades")
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.ToString;
+
+@Document(collection = "ciudades")
+@ToString
 public class Ciudad {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nombre;
 

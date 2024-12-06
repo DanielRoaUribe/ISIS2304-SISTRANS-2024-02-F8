@@ -1,3 +1,5 @@
+/* 
+
 package uniandes.edu.co.superandes.modelo;
 
 import jakarta.persistence.Entity;
@@ -103,3 +105,4 @@ public class IngresoProductos {
         this.cantidad = cantidad;
     }
 }
+*/

@@ -1,21 +1,16 @@
 package uniandes.edu.co.superandes.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "productos")
+import lombok.ToString;
+
+@Document(collection = "producto")
+@ToString
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String nombre;
     private Integer costoBodega;
     private Integer precio;
@@ -27,26 +22,15 @@ public class Producto {
     private String fechaExpiracion;
     private String codigoBarras;
     private Integer nivelReorden;
-
-    @ManyToOne
-    @JoinColumn(name = "id_bodega", nullable = false) // Clave foránea hacia Bodega
-    private Bodega idBodega;
-
-    @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false) // Clave foránea hacia Categoria
-    private Categoria idCategoria;
-
-    @ManyToOne
-    @JoinColumn(name = "id_orden_compra", nullable = true) // Clave foránea hacia OrdenCompra
-    private OrdenCompra idOrdenCompra;
+    private String idCategoria;
 
     public Producto() {
         // Constructor vacío
     }
 
     public Producto(String nombre, Integer costoBodega, Integer precio, String presentacion, Integer cantidadPresentacion,
-                    String unidadMedida, String especificacionesEmpacado, Integer volumenEmpaque, String fechaExpiracion,
-                    String codigoBarras, Integer nivelReorden, Bodega idBodega, Categoria idCategoria, OrdenCompra idOrdenCompra) {
+                    String unidadMedida, String especificacionesEmpacado, Integer volumenEmpaque,
+                    String fechaExpiracion, String codigoBarras, Integer nivelReorden, String idCategoria) {
         this.nombre = nombre;
         this.costoBodega = costoBodega;
         this.precio = precio;
@@ -58,9 +42,7 @@ public class Producto {
         this.fechaExpiracion = fechaExpiracion;
         this.codigoBarras = codigoBarras;
         this.nivelReorden = nivelReorden;
-        this.idBodega = idBodega;
         this.idCategoria = idCategoria;
-        this.idOrdenCompra = idOrdenCompra;
     }
 
     // Getters y Setters
@@ -160,27 +142,11 @@ public class Producto {
         this.nivelReorden = nivelReorden;
     }
 
-    public Integer getIdBodega() {
-        return idBodega.getId();
-    }
-
-    public void setIdBodega(Bodega idBodega) {
-        this.idBodega = idBodega;
-    }
-
-    public Categoria getIdCategoria() {
+    public String getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(Categoria idCategoria) {
+    public void setIdCategoria(String idCategoria) {
         this.idCategoria = idCategoria;
-    }
-
-    public Integer getIdOrdenCompra() {
-        return idOrdenCompra.getId();
-    }
-
-    public void setIdOrdenCompra(OrdenCompra idOrdenCompra) {
-        this.idOrdenCompra = idOrdenCompra;
     }
 }
